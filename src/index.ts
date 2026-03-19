@@ -1,21 +1,23 @@
 import express from 'express'
 import cors from 'cors'
 import dotenv from 'dotenv'
+import itemsRoutes from './routes/items.routes'
 
-// Carga las variables del .env
 dotenv.config()
 
 const app = express()
 const PORT = process.env.PORT || 3000
 
-// Middlewares globales
 app.use(cors())
 app.use(express.json())
 
-// Ruta de prueba
+// Rutas
 app.get('/health', (req, res) => {
   res.json({ status: 'ok', message: 'Servidor funcionando' })
 })
+
+// Todas las rutas de items bajo /items
+app.use('/items', itemsRoutes)
 
 app.listen(PORT, () => {
   console.log(`Servidor corriendo en http://localhost:${PORT}`)
